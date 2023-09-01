@@ -1,0 +1,21 @@
+#LaunchesPerRocket{
+    background-color: var(--background-charts-color);
+    /* height: 100%; */
+}
+
+#LaunchesPerRocketContent{
+    width: 95%;
+    height: 100%;
+    margin: 0 0 1em 0;
+}
+
+#LaunchesPerRocketLegend{
+    row-gap: .5em;
+    margin-bottom: auto;
+}
+
+.LegendSquare{
+    height: 1em;
+    aspect-ratio: 1.5;
+    margin-right: .5em;
+}

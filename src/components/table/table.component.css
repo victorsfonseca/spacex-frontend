@@ -1,0 +1,82 @@
+.LaunchesTable{
+    background-color: var(--background-charts-color);
+    color: black;
+}
+
+.LaunchesTableContainer{
+    row-gap: 1em;
+    margin: 1em 0;
+}
+
+.LaunchesTableRow{
+    background-color: var(--background-table-row-color);
+    text-align: center;
+}
+
+.LaunchesTable table{
+    display: none;
+    border-collapse: separate;
+    border-spacing: 0 1em;
+}
+
+.LaunchesTableRowXl{
+    background-color: var(--background-table-row-color);
+    height: 3em;
+    text-align: center;
+}
+
+.LaunchesPageControll{
+    margin: 0 1em 1em 0;
+    gap: .5em;
+}
+
+.LaunchesPageControll button.PageActive {
+    background-color: var(--button-color-light);
+}
+
+.LaunchesPageControll button{
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: var(--button-color);
+    border-radius: .2em;
+    text-align: center;
+    font-size: 1em;
+}
+
+.LaunchesPageControll button:focus{
+    border: none;
+    outline: none;
+}
+
+.success-background{
+    background-color: #008000;
+    color: white;
+    width: 75px;
+    height: 25px;
+    margin: 0 0 .5em 0;
+}
+
+.fail-background{
+    background-color: #8D0606;
+    color: white;
+    width: 75px;
+    height: 25px;
+    margin: 0 0 .5em 0;
+}
+
+@media only screen and (min-width: 720px) {
+    .LaunchesTableContainer{
+        display: none;
+    }
+    .LaunchesTable table{
+        display: table;
+    }
+    .success-background{
+        margin: 0;
+    }
+    
+    .fail-background{
+        margin: 0;
+    }
+}

@@ -1,0 +1,11 @@
+services:
+  spacex-frontend:
+    container_name: "spacex-frontend"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      -"3000:3000"
+    volumes:
+      -"home/app/node_modules"
+      -"./:/home/app"
