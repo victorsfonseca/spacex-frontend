@@ -1,8 +1,9 @@
-import moment from 'moment'
 import { Launch } from '../../models/launch.model'
 import { Skeleton } from '../skeleton/skeleton.component'
 import './table.component.css'
 import { YoutubeIcon } from '../../assets/icons/youtube.icon'
+import { datetimeFormat } from '../../utils/datetimeFormat'
+import patch from '../../assets/images/patch.png'
 
 type TableProps ={
     data?: Launch[],
@@ -24,12 +25,12 @@ export function Table({data, totalPages, page, pageChanged}: TableProps){
                 {data.map((_,index) => 
                     <div key={index} className='LaunchesTableRow flex flex-d-row'>
                         <div className='flex flex-d-column align-items-center justify-content-center col-sm-4 bold row-gap-05em'>
-                            <div>O</div>
+                            <div><img src={_.patch ?? patch} width='20px'/></div>
                             <div>{_.flightNumber}</div>
                         </div>
                         <div className='flex flex-d-column align-items-center justify-content-center col-sm-4 bold row-gap-05em'>
                             <div>{_.name}</div>
-                            <div>{moment(_.launchDate).format('DD/MM/YYYY')}</div>
+                            <div>{datetimeFormat(_.launchDate,'DD/MM/YYYY')}</div>
                         </div>
                         <div className='flex flex-d-column align-items-center justify-content-center col-sm-4'>
                             <div>
@@ -65,9 +66,9 @@ export function Table({data, totalPages, page, pageChanged}: TableProps){
                     {data.map((_,index) => 
                         <tr key={index} className='LaunchesTableRowXl'>
                             <td>{_.flightNumber}</td>
-                            <td>O</td>
+                            <td><img src={_.patch ?? patch} width='20px'/></td>
                             <td>{_.name}</td>
-                            <td>{moment(_.launchDate).format('DD/MM/YYYY')}</td>
+                            <td>{datetimeFormat(_.launchDate,'DD/MM/YYYY')}</td>
                             <td>{_.rocket.name}</td>
                             <td>
                                 <div className='flex align-items-center justify-content-center'>

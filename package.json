@@ -1,6 +1,6 @@
 {
-  "name": "spacex",
-  "version": "0.1.0",
+  "name": "coodesh-spacex-frontend",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",

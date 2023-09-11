@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './home.page.css';
 import { RocketIcon } from '../../assets/icons/rocket.icon';
 import { SearchIcon } from '../../assets/icons/search.icon';
@@ -11,10 +11,18 @@ import { HomeService } from './home.service';
 import { BarChartData, BarChartRocketData } from '../../models/barChartData.model';
 import { LaunchSuccessStats } from '../../models/launchSuccessStats.model';
 import { ChartColor } from '../../models/chartColor.model';
+import { debounce } from '../../utils/debounce';
+import { updateURL } from '../../utils/updateURL';
 
 function HomePage() {
-    const [search, setSearch] = useState<string>('')
-    const [page, setPage] = useState<number>(1)
+    const queryParameters = new URLSearchParams(window.location.search)
+    const searchQueryParam = queryParameters.get("search")
+    const pageQueryParam = queryParameters.get("page")
+    const initialPage = isNaN(parseInt(pageQueryParam ?? '1', 10)) ? parseInt(pageQueryParam ?? '1', 10) : 1
+    console.log(initialPage)
+    console.log(`Search: ${searchQueryParam} - Page: ${pageQueryParam}`)
+    const [search, setSearch] = useState<string>(searchQueryParam ?? '')
+    const [page, setPage] = useState<number>(initialPage ?? 1)
     const [totalPages, setTotalPages] = useState<number>(1)
     const [successResults, setSuccessResults] = useState<LaunchSuccessStats | undefined>(undefined)
     const [pieChartData, setPieChartData] = useState<PieChartData[] | undefined>(undefined)
@@ -27,39 +35,25 @@ function HomePage() {
 
     useEffect(()=>{
         updateURL(search, page)
-        SearchLaunches()
+        SearchLaunches(page)
     }, [page])
 
     useEffect(()=>{
         updateURL(search, page)
 
         const isMobileQuery = window.matchMedia('(max-width: 720px)').matches;
-        if (!isMobileQuery) return
+        if (isMobileQuery) return debounce(SearchLaunches, 1000)
 
-        const delayDebounceFn = setTimeout(() => {
-            SearchLaunches()
-            setPage(1)
-        }, 1000);
-      
-        return () => clearTimeout(delayDebounceFn);
     }, [search])
 
-    function updateURL(searchString: string, page: number){
-        let url = window.location.origin
-        const params = new URLSearchParams()
-        if(page) params.append('page', page.toString())
-        if(searchString) params.append('search', searchString)
-        if(page || searchString) url = `${url}?${params.toString()}`
-        window.history.replaceState(null, '', url)
-    }
-
-    async function SearchLaunches(){
+    async function SearchLaunches(page: number = 1){
         setLaunches(undefined)
         try {
             let launchesResult = await HomeService().searchLaunches(search,page)
+            if(!launchesResult) throw new Error('')
             setTotalPages(launchesResult.totalPages)
             setLaunches(launchesResult.results)
-            console.log(launchesResult.results)
+            setPage(page)
         } catch (error) {
             alert("Erro ao buscar launches")
         }
@@ -67,7 +61,6 @@ function HomePage() {
 
     function SearchButtonPressed(){
         SearchLaunches()
-        setPage(1)
     }
 
     async function SearchStats(){

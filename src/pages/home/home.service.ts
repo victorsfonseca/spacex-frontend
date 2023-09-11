@@ -2,14 +2,13 @@ import axios from "axios";
 import { LaunchStatsReturn } from "../../models/launchStatsReturn.model";
 import { PaginatedReturn } from "../../models/paginatedReturn.model";
 import { Launch } from "../../models/launch.model";
+import { config } from "../../config/config";
 
-const url = 'http://localhost:5000/launches/stats'
-const launchesUrl = 'http://localhost:5000/launches'
 export function HomeService(){
     async function searchStats():Promise<LaunchStatsReturn>{
         return new Promise(async (resolve,reject) => {
             try{
-                resolve((await axios.get<LaunchStatsReturn>(url)).data)
+                resolve((await axios.get<LaunchStatsReturn>(config.statsUrl)).data)
             } catch (error) {
                 reject(error)
             }
@@ -23,7 +22,7 @@ export function HomeService(){
                 params.append('limit', '5')
                 if(page) params.append('page', page.toString())
                 if(search) params.append('search', search)
-                resolve((await axios.get(`${launchesUrl}?${params.toString()}`)).data as PaginatedReturn<Launch>)
+                resolve((await axios.get(`${config.launchesUrl}?${params.toString()}`)).data as PaginatedReturn<Launch>)
             } catch (error) {
                 reject(error)
             }
