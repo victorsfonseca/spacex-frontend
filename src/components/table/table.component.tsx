@@ -16,12 +16,13 @@ export function Table({data, totalPages, page, pageChanged}: TableProps){
     function PageSelected(page: number){
         if(pageChanged) pageChanged(page)
     }
-    
+
     if(!data) return <div className='responsive' style={{height: '360px'}}><Skeleton /></div>
     
     return (
         <div className="LaunchesTable flex flex-d-column responsive">
             <div className='LaunchesTableContainer flex flex-d-column responsive'>
+                {data.length <= 0 ? <h6>Nenhum registro encontrado</h6> : <></>}
                 {data.map((_,index) => 
                     <div key={index} className='LaunchesTableRow flex flex-d-row'>
                         <div className='flex flex-d-column align-items-center justify-content-center col-sm-4 bold row-gap-05em'>
@@ -63,6 +64,12 @@ export function Table({data, totalPages, page, pageChanged}: TableProps){
                     </tr>
                 </thead>
                 <tbody>
+                    {data.length <= 0 ? 
+                    <tr>
+                        <td colSpan={7}>
+                            <h5>Nenhum registro encontrado</h5>
+                        </td>
+                    </tr> : <></>}
                     {data.map((_,index) => 
                         <tr key={index} className='LaunchesTableRowXl'>
                             <td>{_.flightNumber}</td>

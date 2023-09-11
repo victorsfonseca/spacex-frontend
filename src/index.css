@@ -122,6 +122,10 @@ h3{
   margin: .5em 0;
 }
 
+h5, h6{
+  text-align: center;
+}
+
 @media only screen and (min-width: 720px) {
   .flex-on-desktop{
     display: flex;
