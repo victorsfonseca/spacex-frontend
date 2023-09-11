@@ -18,9 +18,7 @@ function HomePage() {
     const queryParameters = new URLSearchParams(window.location.search)
     const searchQueryParam = queryParameters.get("search")
     const pageQueryParam = queryParameters.get("page")
-    const initialPage = isNaN(parseInt(pageQueryParam ?? '1', 10)) ? parseInt(pageQueryParam ?? '1', 10) : 1
-    console.log(initialPage)
-    console.log(`Search: ${searchQueryParam} - Page: ${pageQueryParam}`)
+    const initialPage = !isNaN(parseInt(pageQueryParam ?? '1', 10)) ? parseInt(pageQueryParam ?? '1', 10) : 1
     const [search, setSearch] = useState<string>(searchQueryParam ?? '')
     const [page, setPage] = useState<number>(initialPage ?? 1)
     const [totalPages, setTotalPages] = useState<number>(1)
